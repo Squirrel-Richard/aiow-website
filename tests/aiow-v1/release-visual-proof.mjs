@@ -3,58 +3,63 @@ import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 
 const base = process.env.AIOW_PROOF_BASE || "http://127.0.0.1:4321";
-const out = process.env.AIOW_PROOF_DIR || ".team-handsome/AIOW-TW-RESET-20260905/50-proof";
+const out = process.env.AIOW_PROOF_DIR || ".team-handsome/AIOW-QM-20260905/50-proof";
 const viewports = [
   { width: 320, height: 844 }, { width: 375, height: 844 }, { width: 390, height: 844 },
   { width: 768, height: 900 }, { width: 1024, height: 900 }, { width: 1440, height: 900 },
 ];
 const locales = [
-  { code: "nl", route: "/", hero: "oplossingen", labels: ["Werk", "Bedrijfspanden", "Woningen & villa’s"], cta: "Laat één proces of ruimte scannen", scanHref: "/scan" },
-  { code: "en", route: "/en", hero: "solutions", labels: ["Work", "Commercial buildings", "Homes & villas"], cta: "Scan one process or space", scanHref: "/en/scan" },
+  { code: "nl", route: "/", hero: "oplossingen", h1: "AI die voor u werkt.", labels: ["Werk", "Bedrijfspanden", "Woningen & villa’s"], cta: "Laat één proces of ruimte scannen", scanHref: "/scan" },
+  { code: "en", route: "/en", hero: "solutions", h1: "AI that works for you.", labels: ["Work", "Commercial buildings", "Homes & villas"], cta: "Scan one process or space", scanHref: "/en/scan" },
 ];
 await mkdir(out, { recursive: true });
 const browser = await webkit.launch({ headless: true });
-const receipt = { base, generatedAt: new Date().toISOString(), views: [], noJavaScript: [] };
+const receipt = { base, generatedAt: new Date().toISOString(), design: "Quiet Monolith", views: [], noJavaScript: [] };
 
 async function inspect(page, viewport, theme, locale) {
   const result = await page.evaluate((config) => {
-    const rect = (node) => { const r = node.getBoundingClientRect(); return { top: Math.round(r.top), bottom: Math.round(r.bottom), left: Math.round(r.left), right: Math.round(r.right), width: Math.round(r.width), height: Math.round(r.height) }; };
+    const rect = (node) => { if (!node) return null; const r = node.getBoundingClientRect(); return { top: Math.round(r.top), bottom: Math.round(r.bottom), left: Math.round(r.left), right: Math.round(r.right), width: Math.round(r.width), height: Math.round(r.height) }; };
     const hero = document.getElementById(config.hero);
     const categories = [...hero.querySelectorAll("nav a")];
-    const cta = [...hero.querySelectorAll("a")].find((node) => node.textContent.trim() === config.cta);
-    const conductor = hero.querySelector('[data-aiow-conductor="true"]');
+    const cta = [...hero.querySelectorAll("a")].find((node) => node.textContent.trim().replace(/↗/g, "").trim() === config.cta);
+    const image = hero.querySelector('img[src*="quiet-monolith"]');
+    const seam = hero.querySelector('[class*="seam"]');
     const commercialActions = [...document.querySelectorAll(`a[href="${config.scanHref}"]`)].map(rect).filter((box) => box.width > 0 && box.height > 0 && box.top < innerHeight);
     return {
       htmlLang: document.documentElement.lang,
       h1Count: document.querySelectorAll("h1").length,
+      h1Text: hero.querySelector("h1")?.textContent?.replace(/\s+/g, " ").trim(),
       categoryCount: categories.length,
       categoryLabels: categories.map((node) => node.querySelector("strong")?.textContent?.trim()),
       categoryRects: categories.map(rect),
-      categoryContentRects: categories.map((node) => [rect(node.querySelector("strong")), rect(node.querySelector("small"))]),
       ctaHref: cta?.getAttribute("href"),
       ctaRect: rect(cta),
       commercialActions,
       heroRect: rect(hero),
-      heroMedia: hero.querySelectorAll("img,video").length,
+      imageRect: rect(image),
+      imageLoaded: Boolean(image?.complete && image?.naturalWidth),
+      imageCount: hero.querySelectorAll("img").length,
+      forbiddenMedia: hero.querySelectorAll("video,canvas,svg").length,
+      heroSmallText: hero.querySelectorAll("small").length,
+      oldBlueprint: Boolean(hero.querySelector('[data-aiow-conductor="true"], [data-authority-switch="true"]')),
       overflow: document.documentElement.scrollWidth - innerWidth,
-      conductor: { animation: getComputedStyle(conductor).animationName, offset: getComputedStyle(conductor).strokeDashoffset },
+      seamAnimation: seam ? getComputedStyle(seam).animationName : null,
     };
   }, locale);
-  if (result.htmlLang !== locale.code) throw new Error(`${locale.code}/${viewport.width}/${theme}: lang=${result.htmlLang}`);
-  if (result.h1Count !== 1) throw new Error(`${locale.code}/${viewport.width}/${theme}: H1=${result.h1Count}`);
-  if (result.categoryCount !== 3) throw new Error(`${locale.code}/${viewport.width}/${theme}: categories=${result.categoryCount}`);
-  if (result.categoryLabels.join("|") !== locale.labels.join("|")) throw new Error(`${locale.code}/${viewport.width}/${theme}: labels=${result.categoryLabels.join("|")}`);
-  if (result.ctaHref !== locale.scanHref) throw new Error(`${locale.code}/${viewport.width}/${theme}: CTA=${result.ctaHref}`);
-  if (result.heroMedia !== 0) throw new Error(`${locale.code}/${viewport.width}/${theme}: hero media=${result.heroMedia}`);
-  if (result.overflow > 1) throw new Error(`${locale.code}/${viewport.width}/${theme}: overflow=${result.overflow}`);
-  if (result.commercialActions.length !== 1) throw new Error(`${locale.code}/${viewport.width}/${theme}: first-viewport scan actions=${result.commercialActions.length}`);
-  for (const target of [...result.categoryRects, result.ctaRect]) if (target.width < 44 || target.height < 44) throw new Error(`${locale.code}/${viewport.width}/${theme}: target=${JSON.stringify(target)}`);
-  result.categoryContentRects.forEach((children, index) => children.forEach((child) => { const parent = result.categoryRects[index]; if (child.left < parent.left - 1 || child.right > parent.right + 1 || child.top < parent.top - 1 || child.bottom > parent.bottom + 1) throw new Error(`${locale.code}/${viewport.width}/${theme}: category content escapes parent=${JSON.stringify({ parent, child })}`); }));
-  result.categoryRects.forEach((category, index) => {
-    if (category.left < -1 || category.right > viewport.width + 1 || category.top < -1 || category.bottom > viewport.height + 1) {
-      throw new Error(`${locale.code}/${viewport.width}/${theme}: category ${index + 1} outside viewport=${JSON.stringify(category)}`);
-    }
-  });
+  const label = `${locale.code}/${viewport.width}/${theme}`;
+  if (result.htmlLang !== locale.code) throw new Error(`${label}: lang=${result.htmlLang}`);
+  if (result.h1Count !== 1 || result.h1Text !== locale.h1) throw new Error(`${label}: H1=${result.h1Count}/${result.h1Text}`);
+  if (result.categoryCount !== 3) throw new Error(`${label}: categories=${result.categoryCount}`);
+  if (result.categoryLabels.join("|") !== locale.labels.join("|")) throw new Error(`${label}: labels=${result.categoryLabels.join("|")}`);
+  if (result.ctaHref !== locale.scanHref) throw new Error(`${label}: CTA=${result.ctaHref}`);
+  if (!result.imageLoaded || result.imageCount !== 1) throw new Error(`${label}: monolith=${result.imageLoaded}/${result.imageCount}`);
+  if (result.forbiddenMedia !== 0 || result.oldBlueprint) throw new Error(`${label}: rejected hero media/blueprint present`);
+  if (result.heroSmallText !== 0) throw new Error(`${label}: hero microcopy=${result.heroSmallText}`);
+  if (result.overflow > 1) throw new Error(`${label}: overflow=${result.overflow}`);
+  if (result.commercialActions.length !== 1) throw new Error(`${label}: first-viewport scan actions=${result.commercialActions.length}`);
+  for (const target of [...result.categoryRects, result.ctaRect]) if (!target || target.width < 44 || target.height < 44) throw new Error(`${label}: target=${JSON.stringify(target)}`);
+  for (const [index, category] of result.categoryRects.entries()) if (category.left < -1 || category.right > viewport.width + 1 || category.top < -1 || category.bottom > viewport.height + 1) throw new Error(`${label}: category ${index + 1} outside viewport=${JSON.stringify(category)}`);
+  if (result.seamAnimation !== "none") throw new Error(`${label}: reduced-motion seam=${result.seamAnimation}`);
   return result;
 }
 
@@ -87,5 +92,7 @@ try {
   }
   const receiptPath = path.resolve(out, "browser-proof.json");
   await writeFile(receiptPath, `${JSON.stringify(receipt, null, 2)}\n`);
-  console.log(`AIOW_VISUAL_PROOF_PASS views=${receipt.views.length} no_js=${receipt.noJavaScript.length} receipt=${receiptPath}`);
-} finally { await browser.close(); }
+  console.log(`AIOW_QM_VISUAL_PROOF_PASS views=${receipt.views.length} no_js=${receipt.noJavaScript.length} receipt=${receiptPath}`);
+} finally {
+  await browser.close();
+}

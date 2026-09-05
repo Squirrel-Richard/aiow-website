@@ -51,12 +51,12 @@ try {
     }
 
     assert.equal(await page.locator("h1").count(), 1, `homepage must expose exactly one H1 at ${width}`);
-    assert.equal(await page.locator('nav[aria-label="Drie AIOW-categorieën"] a').count(), 3, `three category entrances missing at ${width}`);
+    assert.equal(await page.locator('#oplossingen nav[aria-label="Kies uw omgeving"] a').count(), 3, `three category entrances missing at ${width}`);
     for (const label of ["Werk", "Bedrijfspanden", "Woningen & villa’s"]) assert.equal(await page.getByRole("link", { name: new RegExp(label) }).count(), 1, `${label} entrance missing at ${width}`);
-    assert.equal(await page.locator('#oplossingen svg').count(), 1, `architectural blueprint missing at ${width}`);
-    assert.equal(await page.locator('#oplossingen video, #oplossingen img').count(), 0, `hero media found at ${width}`);
-    assert.equal(await page.locator('#systemen article').count(), 3, `three system ledgers missing at ${width}`);
-    assert.equal(await page.locator('#systemen article > ol > li').count(), 12, `four-stage category traces missing at ${width}`);
+    assert.equal(await page.locator('#oplossingen img[src*="quiet-monolith"]').count(), 1, `Quiet Monolith image missing at ${width}`);
+    assert.equal(await page.locator('#oplossingen video, #oplossingen canvas, #oplossingen svg').count(), 0, `rejected hero media found at ${width}`);
+    assert.equal(await page.locator('#systemen article').count(), 3, `three environment chapters missing at ${width}`);
+    assert.equal(await page.locator('#systemen article details > ol > li').count(), 12, `four-stage category traces missing at ${width}`);
     assert.equal(await page.locator('#systemen article details').count(), 3, `category example disclosures missing at ${width}`);
     assert.equal(await page.locator('[data-premium-instrument="calculator"]').count(), 1, `premium calculator instrument missing at ${width}`);
     assert.equal(await page.locator('#aanpak > ol > li').count(), 4, `approach rail structure at ${width}`);
@@ -83,9 +83,9 @@ try {
     }
 
     await page.emulateMedia({ reducedMotion: "reduce" });
-    const reducedFieldMotion = await page.locator('[data-aiow-conductor="true"]').evaluate((node) => ({ animation: getComputedStyle(node).animationName, offset: getComputedStyle(node).strokeDashoffset }));
-    assert.equal(reducedFieldMotion.animation, "none", `conductor motion not disabled at ${width}`);
-    assert.equal(Number.parseFloat(reducedFieldMotion.offset), 0, `conductor final state missing under reduced motion at ${width}`);
+    const reducedFieldMotion = await page.locator('[data-aiow-monolith-seam="true"]').evaluate((node) => ({ animation: getComputedStyle(node).animationName, transform: getComputedStyle(node).transform }));
+    assert.equal(reducedFieldMotion.animation, "none", `monolith seam motion not disabled at ${width}`);
+    assert.equal(reducedFieldMotion.transform, "matrix(1, 0, 0, 1, 0, 0)", `monolith seam final state missing under reduced motion at ${width}`);
 
     await page.emulateMedia({ reducedMotion: "no-preference" });
 
