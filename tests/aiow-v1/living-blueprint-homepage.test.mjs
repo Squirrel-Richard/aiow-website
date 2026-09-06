@@ -42,6 +42,7 @@ test("hero is server rendered, local-asset led and carries one calm hierarchy",(
  assert.match(hero,/You always decide what happens\./);
  assert.match(hero,/src="\/aiow\/quiet-monolith\/hero\.webp"/);
  assert.match(hero,/alt=""/);assert.match(hero,/priority/);assert.match(hero,/fetchPriority="high"/);assert.match(hero,/sizes="\(max-width: 700px\) 100vw, 62vw"/);
+ assert.doesNotMatch(hero,/<figcaption|srOnly/);
  assert.ok(asset.size>0&&asset.size<100_000,`hero asset bytes=${asset.size}`);
 });
 
@@ -80,4 +81,9 @@ test("anti-clutter and quality rails remain explicit",()=>{
  assert.match(sharedCss,/\.header\[data-compact-mobile="true"\]\{height:calc\(58px \+ env\(safe-area-inset-top\)\);top:0;max-width:100%;margin:0/);
  assert.match(analytics,/\["localhost", "127\.0\.0\.1", "::1"\]/);assert.match(analytics,/window\.location\.hostname/);
  assert.match(nextConfig,/htmlLimitedBots:\s*\/\.\*\//);
+});
+
+test("design DNA uses the canonical public contact source",()=>{
+ assert.match(dna,/Company facts remain canonical:[^\n]*info@aiow\.io\./);
+ assert.doesNotMatch(dna,/Company facts remain canonical:[^\n]*info@aiow\.ai\./);
 });

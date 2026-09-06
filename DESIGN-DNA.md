@@ -134,7 +134,7 @@ All three stay visible in the hero category register. Detailed pages and the env
 
 ## Navigation and company identity
 
-Primary navigation keeps Oplossingen, Mogelijkheden, Tarieven and Bedrijf plus the existing scan flow where appropriate. The homepage itself shows no competing header CTA while the hero CTA is visible. Company facts remain canonical: AIOW B.V. · Bijlmermeerstraat 30 · 2131 HC Hoofddorp · KvK 71887466 · info@aiow.ai.
+Primary navigation keeps Oplossingen, Mogelijkheden, Tarieven and Bedrijf plus the existing scan flow where appropriate. The homepage itself shows no competing header CTA while the hero CTA is visible. Company facts remain canonical: AIOW B.V. · Bijlmermeerstraat 30 · 2131 HC Hoofddorp · KvK 71887466 · info@aiow.io.
 
 ## Copy voice
 

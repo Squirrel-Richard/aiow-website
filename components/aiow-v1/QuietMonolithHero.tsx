@@ -60,7 +60,6 @@ export function QuietMonolithHero({ locale = "nl" }: { locale?: Locale }) {
         className={styles.image}
       />
       <span className={styles.seam} data-aiow-monolith-seam="true" aria-hidden="true" />
-      <figcaption className={styles.srOnly}>Abstract AIOW-merkbeeld van één beheerst systeem.</figcaption>
     </figure>
 
     <p className={styles.authority}>{c.authority}</p>
