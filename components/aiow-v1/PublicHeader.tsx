@@ -18,7 +18,7 @@ function currentNavKey(pathname: string): NavKey | null {
   return null;
 }
 
-export function PublicHeader({ locale = "nl", onBook, primaryAction = "scan", compactMobile = false, showCta = true }: { locale?: AiowLocale; onBook?: (event: MouseEvent<HTMLButtonElement>) => void; primaryAction?: "scan" | "price"; compactMobile?: boolean; showCta?: boolean }) {
+export function PublicHeader({ locale = "nl", onBook, primaryAction = "scan", compactMobile = false, showCta = true, variant }: { locale?: AiowLocale; onBook?: (event: MouseEvent<HTMLButtonElement>) => void; primaryAction?: "scan" | "price"; compactMobile?: boolean; showCta?: boolean; variant?: "human-industrial" }) {
   const en = locale === "en";
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
@@ -29,12 +29,19 @@ export function PublicHeader({ locale = "nl", onBook, primaryAction = "scan", co
   const actionHref = primaryAction === "price" ? "#booking" : scanHref;
   const actionLabel = primaryAction === "price" ? (en ? "View your indication" : "Bekijk uw indicatie") : scanLabel;
   const active = currentNavKey(pathname);
-  const items: { key: NavKey; href: string; label: string }[] = [
+  const defaultItems: { key: NavKey; href: string; label: string }[] = [
     { key: "solutions", href: en ? "/en#solutions" : "/#oplossingen", label: en ? "Solutions" : "Oplossingen" },
     { key: "capabilities", href: en ? "/en/capabilities" : "/mogelijkheden", label: en ? "Capabilities" : "Mogelijkheden" },
     { key: "rates", href: en ? "/en/rates" : "/tarieven", label: en ? "Rates" : "Tarieven" },
     { key: "company", href: en ? "/en/company" : "/bedrijfsgegevens", label: en ? "Company" : "Bedrijf" },
   ];
+  const humanIndustrialItems: { key: NavKey; href: string; label: string }[] = [
+    { key: "solutions", href: en ? "/en/ai-automation" : "/ai-automatisering", label: en ? "Company" : "Bedrijf" },
+    { key: "capabilities", href: en ? "/en/smart-office" : "/smart-office", label: en ? "Building" : "Bedrijfspand" },
+    { key: "company", href: en ? "/en/home" : "/home", label: en ? "Home" : "Woning" },
+    { key: "rates", href: en ? "/en/rates" : "/tarieven", label: en ? "Costs" : "Kosten" },
+  ];
+  const items = variant === "human-industrial" ? humanIndustrialItems : defaultItems;
 
   useEffect(() => { setMenuOpen(false); }, [pathname]);
   useEffect(() => {
@@ -57,7 +64,7 @@ export function PublicHeader({ locale = "nl", onBook, primaryAction = "scan", co
     if (event.shiftKey && index > 0) { event.preventDefault(); items[index - 1]?.focus(); }
   }
 
-  return <header className={styles.header} data-compact-mobile={compactMobile ? "true" : undefined}>
+  return <header className={styles.header} data-compact-mobile={compactMobile ? "true" : undefined} data-variant={variant}>
     <Link href={en ? "/en" : "/"} className={styles.logo} aria-label={en ? "AIOW English home" : "AIOW home"}><span>AIOW</span><i /></Link>
     <button ref={menuButton} type="button" className={styles.menuButton} aria-expanded={menuOpen} aria-controls="primary-navigation" onClick={() => setMenuOpen((open) => !open)}>{en ? "Menu" : "Menu"}<span aria-hidden="true">{menuOpen ? "×" : "☰"}</span></button>
     <nav ref={navigation} id="primary-navigation" data-open={menuOpen} aria-label={en ? "Primary navigation" : "Hoofdnavigatie"} onKeyDown={navigateOpenMenu}>

@@ -1,178 +1,214 @@
-# AIOW — Quiet Monolith
+# AIOW — Human Industrial
 
-## Scope and authority
+## Authority and status
 
-This file governs the public AIOW V1 surface at `aiow.ai`. It preserves the existing portal, scan, venture, admin and transactional behavior. Richard approved **Quiet Monolith** on 2026-09-05 after vetoing the live Living Blueprint as visually chaotic and insufficiently high-end on both mobile and desktop. Product truth survives; the rejected diagram metaphor does not.
+This file governs the public AIOW homepage redesign on branch `feat/aiow-human-industrial-motion-20260906`. Richard rejected the prior Quiet Monolith and editorial architecture directions because they retained the recognisable visual grammar of AI-generated “premium” sites: fashionable serif/sans pairings, beige/black/gold, generic architecture imagery, glass, and mirrored light/dark themes.
+
+This branch passed local technical, accessibility, motion and product-art review on 2026-09-06. Production remains unchanged until protected PR integration and exact live-domain readback complete.
 
 ## Product intent
 
-- **Audience:** Dutch owners and operators evaluating practical bespoke AI for their work, a commercial building, or a home/villa.
-- **Primary task:** understand in three seconds that AIOW designs and builds one controlled system around the visitor’s world, recognise exactly **Werk**, **Bedrijfspanden**, and **Woningen & villa’s**, then request one bounded scan.
-- **Platform:** responsive public web; mobile and desktop are separately composed around one shared hierarchy.
-- **Courage:** 4/5 — near-silent luxury with one ownable object, not visual spectacle.
-- **Emotional core:** “this is where I have my AI built” — private architectural atelier, exact, calm and capable.
+- Audience: Dutch owners and operators seeking bespoke AI for company processes, a commercial building, or a home/villa.
+- Primary task: choose the correct world in 3–5 seconds, then see only relevant examples, boundaries, price context and scan flow.
+- Primary worlds: `Werk`, `Pand`, `Wonen` in the expressive hero; full accessible labels remain `Voor mijn bedrijf`, `Voor mijn bedrijfspand`, `Voor mijn woning of villa`.
+- Courage: 5/5. AIOW must look authored, not prompt-generated.
+- Emotional core: precise control with human presence; capable enough to be bold, disciplined enough not to perform intelligence.
 
-## Promise and plain-language law
+## Promise
 
-**Hero promise:** “AI die voor u werkt.”
-**Support:** “AIOW ontwerpt en bouwt één beheerst systeem voor uw werk, gebouw of woning.”
-**Category truth:** Werk · Bedrijfspanden · Woningen & villa’s.
-**Primary action:** “Laat één proces of ruimte scannen.”
+NL H1:
 
-Every public surface leads with the change in the visitor’s world, then explains technology, boundaries and delivery. Public NL uses `u/uw` consistently. Customer-facing UI, PDF and mail never expose implementation vocabulary such as outbox, adapter, canonical snapshot, durable receipt, frozen request, mail task or lead.
+`Niet nog een losse tool. Een systeem dat voor u werkt.`
+
+NL support:
+
+`AIOW ontwerpt, bouwt en beheert AI op maat — voor processen, gebouwen en woningen.`
+
+EN H1:
+
+`Not another disconnected tool. One system built to work for you.`
+
+Human authority remains explicit: `Een mens beslist. Altijd.` / `A person decides. Always.`
 
 ## Brand world
 
-Objects/materials: blackened architectural steel, precision-cut limestone, one embedded copper seam, museum plinth, warm drafting paper, smoked glass, linen proposal, survey notebook, engraved instrument plate, architectural section.
+Physical sources:
 
-Language: ontworpen, gebouwd, gekoppeld, beheerd, scan, scope, implementatie, begrensd, lokaal, privé, menselijke regie.
+- Dutch wayfinding and civic signage;
+- industrial control labels;
+- anodised aluminium;
+- lacquered emergency-stop red;
+- deep green machinery paint;
+- chalk markings;
+- milled instrument apertures;
+- indexed technical binders;
+- architectural material boards;
+- precisely aligned switchgear.
 
-Avoid: purple/blue AI glow, robots, generic AI-agency claims, fake social proof, dashboard KPIs, speculative savings, technical diagrams in the hero, repeated cards and over-glass body copy.
+Insider language: ontworpen, gebouwd, beheerd, gekoppeld, begrensd, scan, scope, mens beslist, één geheel, dagelijks beheer.
 
-## Tokens
+Avoid: AI glow, robots, generated architecture heroes, dashboards, glass cards, purple/blue gradients, default SaaS icons, fake metrics, repeated rounded cards, fashionable editorial serif, beige/black/gold luxury, raw stock photography.
 
-- Deep background `#0D0E10` — blackened architectural steel.
-- Raised solid surface `#15171A` — museum plinth.
-- Warm light background `#EEE8DD` — architectural limestone/drafting paper.
-- Warm light surface `#F7F2E9` — linen proposal.
-- Dark ink `#171717`; light ink `#F4F0E9`.
-- Muted dark `#59564F`; muted light `#B9B3AA`.
-- Single accent `#D2A15D` dark / `#8A5A20` light — embedded copper seam, AA-safe in context.
-- Hairline dark `rgba(255,255,255,.12)` / light `rgba(23,23,23,.16)`.
-- Headlines: Fraunces. UI/body: Inter. No third family.
+## Visual system
 
-## Composition and visual grammar
+### Typography
 
-The homepage follows one sequence:
+- Display: narrow industrial/signage grotesk with a deliberately resilient stack: `Avenir Next Condensed`, `Arial Narrow`, `Helvetica Neue`, sans-serif. The production composition is proven against the non-Avenir fallback; a licensed or commissioned AIOW cut is an optional future refinement, not a release dependency.
+- Body/UI: humanist sans. Prototype stack: `Avenir Next`, `Segoe UI`, system-ui, sans-serif.
+- No serif anywhere on the public homepage.
+- Display is uppercase only for short promises, route words and instrument labels; body copy stays sentence case.
 
-`one promise → one action → three domains → proof of control → delivery → indication → final scan decision`.
+### Day palette
 
-### First viewport
+- Aluminium `#E4E5E0`
+- Instrument black `#11110F`
+- Lacquer red `#D94B30`
+- Secondary graphite `#686963`
+- White `#F5F4EE`
 
-- One minimal header.
-- One short eyebrow.
-- One two-line promise.
-- One short support sentence.
-- One primary scan CTA.
-- One Quiet Monolith asset: a single blackened-steel/limestone object with an embedded copper seam representing one controlled system.
-- The three exact categories appear as a quiet text ledger, never as cards, tabs, diagrams or technical stages.
-- No scan-contract microcopy, trust chips, secondary CTA, numbered sections, schematic disclaimer or capability descriptions compete in the hero.
+### Evening palette
+
+Evening is independently art-directed, not an inverted day palette:
+
+- Machinery green `#17382E`
+- Chalk `#DDEADD`
+- Coral control `#F56A4D`
+- Muted mineral `#9EB7A9`
+- Deep field `#10271F`
+
+System mode selects day/evening by OS preference. Manual Light/Dark remains available but is described visually as Day/Evening where copy allows.
+
+### Shape and surface
+
+- Square or 1–2px corners; no pill navigation or repeated rounded cards.
+- Hairline rules establish rhythm.
+- Large solid fields, hard crops and typographic scale create depth.
+- No body glass. One sticky navigation layer may use a near-solid surface with subtle transparency and solid fallback.
+- The outlined `O` is the physical aperture in the A-I-O-W spine and the primary identity motif.
+
+## Homepage composition
 
 ### Mobile 320/375/390
 
-The order is fixed: compact header → promise → support → full-width CTA → cropped monolith → three category rows. The first viewport carries one promise, one action and one visual. Descriptors, causal stages and pricing move below. Mobile is not compressed desktop.
+Compact identity/header → short eyebrow → four-line H1 with one lacquer field → concise support → human-authority line → all three route rows → compact active Route Field.
+
+All three routes must remain identifiable in the first useful viewport at 390×844. At 320px the third route may touch the lower edge but must remain visible and tappable without horizontal overflow.
 
 ### Desktop 1024/1440/1920
 
-The hero uses a restrained statement/visual split. Promise and CTA occupy the left; the monolith receives uninterrupted space on the right. A bottom category register spans the composition. Negative space is functional and may not be filled with proof labels or decoration.
+A fixed-width A-I-O-W identity spine anchors the left edge. The promise and route instrument share the left scene without overlap. A solid Route Field occupies the right scene. The active route expands within that field without moving any link target.
 
-### Page rhythm below the fold
+The header is a horizontal instrument line, not a floating rounded navigation pill. Its primary labels mirror the customer journey: `Bedrijf`, `Bedrijfspand`, `Woning`, `Kosten` / `Company`, `Building`, `Home`, `Costs`.
 
-- **Environment chapter:** one editorial section per category, with one short promise and progressively disclosed examples/causal trace. Never three dense technical ledgers at once.
-- **Human control chapter:** one large statement plus one compact four-step line; no second card grid.
-- **Delivery chapter:** Scan · Scope · Bouw · Beheer as a quiet chronological rail.
-- **Indication chapter:** calculator remains the canonical commercial instrument and receives its own solid field.
-- **Closing chapter:** scan decision and memo contract share one calm closing scene; no duplicate decorative grid.
+## Signature motion — Route Field
 
-Every major section gets one dominant content block, one job and generous separation. Alternating every section between heavy light/dark slabs is forbidden.
+Purpose: preview which customer world will open and make route choice feel physical and authored.
 
-## Clean Glass constitution
+State authority:
 
-- Maximum one glass layer: the sticky header only when it floats above meaningful imagery.
-- Header glass uses `color-mix(in oklch, var(--surface) 62%, transparent)`, blur 18px, saturation 160%, one light edge and a broad soft shadow.
-- Solid fallback is mandatory through `@supports`; reduced transparency uses the solid header.
-- Body copy never sits on glass.
-- The hero visual and all content sections use solid surfaces.
+- One `activeRoute` state controls pointer hover, keyboard focus and visual field.
+- Links remain normal semantic links; click/tap navigates directly.
+- Visual layers are decorative and `aria-hidden`.
+- `aria-current` is not used for a hover preview because no navigation has occurred.
 
-## Signature and motion
+Motion:
 
-**Signature:** Quiet Monolith — one finite copper seam settles through the single architectural object after first paint. It expresses `one system under human control`, not AI activity or autonomous execution.
+- First paint: spine settles and active route field opens once.
+- Route preview: active solid field reveals with one directional `clip-path` shutter.
+- Large route word follows 55–90ms later with a restrained translate/opacity settle.
+- Route indicator moves through a transform, never through layout geometry.
+- Desktop target transition: 460–560ms, cubic-bezier(.22,1,.36,1).
+- Mobile target transition: 320–420ms.
+- No idle loop, particles, cursor following, parallax, scroll-jacking, animated blur or decorative continuous motion.
 
-- Static HTML/image and all text are complete without JavaScript.
-- The primary task remains complete without motion.
-- Motion duration: at most 700ms on first entry; no idle loop.
-- Hover/focus changes only local emphasis; interactive geometry never moves.
-- Reduced Motion, slow-update and weak-device routes show the settled final state immediately.
-- No video, WebGL, particles, parallax, pointer chasing or scroll-jacking in the first release.
-- **Invariant anchors:** logo, H1, CTA and category ledger never shift during motion.
-- **Compressed repeat-use form:** static seam; no replay during ordinary navigation.
+Invariant anchors: H1, route links, header, scan contract and focus targets never move.
 
-## Asset strategy
+Reduced motion / weak device / no-JS:
 
-The approved styleframe uses synthetic concept art as a direction artifact. Production may use the optimized monolith asset only as a non-customer, abstract brand object with recorded source/hash. It is not evidence of a built system, customer site or included hardware. If a real commissioned render or photographed physical maquette replaces it later, preserve the same silhouette, crop-safe negative space and copper seam.
+- `prefers-reduced-motion: reduce` and `update: slow` remove animation and transition.
+- Default route content is rendered in settled state in HTML.
+- Without JavaScript all three route links work and the first visual field remains legible.
+- No feature or claim exists only in motion.
 
-- Source concept PNG SHA-256: `25642b7b4f03a6af0e1c45aaaddbfe477c2132673585788292f74ddc6d2cc306`.
-- Production `public/aiow/quiet-monolith/hero.webp` SHA-256: `303221b524906b4ef1e284c6472998b5acb1448a5a233d51895dd12ce2603569`.
+## Theme behavior
 
-No raw stock. Documentary environment imagery below the fold must be real/commissioned or clearly synthetic and must never imply a customer case.
+Day and Evening share information architecture and semantics but not merely colours:
 
-## State and commercial truth
+- Day uses the black identity spine and lacquer route field.
+- Evening uses the green field, chalk type and coral aperture; background field geometry shifts independently.
+- Theme switching may crossfade surfaces but may not replay the full entrance choreography.
+- Both themes retain AA contrast, visible focus and identical authority text.
 
-- Calculator output is explicitly an indication.
-- Booking remains a scan request pending human confirmation, never reserved availability.
-- Errors explain correction; success follows durable acceptance only.
-- Missing booking, quote, mail or storage configuration fails closed.
-- Evidence remains labelled as reference architecture, internal demonstration, pilot or approved customer case.
-- Hardware, physical installation and qualified partner work are separately scoped.
-- No universal €2.950 offer represents all three environments.
+## Conversion
 
-## Three-category contract
+The hero does not lead with a generic scan CTA. Visitors choose a world first:
 
-1. **Werk** — processes, websites, internal apps and integrations.
-2. **Bedrijfspanden** — energy, climate, access, safety and maintenance.
-3. **Woningen & villa’s** — comfort, lighting, climate, energy and safety.
+- Werk → `/ai-automatisering`
+- Pand → `/smart-office`
+- Wonen → `/home`
 
-All three stay visible in the hero category register. Detailed pages and the environment chapter may explain `signaal → AI-interpretatie → begrensde action/systeem → menselijke bevoegdheid`; the hero must not. Priority context pages preserve one optional plain-language journey before examples: `Nu vaak → Met AIOW → menselijke beslissing`.
+Those routes preserve context into:
 
-## Conversion and authority law
+- `/scan?intent=proces`
+- `/scan?intent=pand`
+- `/scan?intent=woning`
 
-- Exactly one visually dominant commercial action appears in the first viewport: `Laat één proces of ruimte scannen`.
-- The adjacent hero no longer carries the complete legal/scan contract; the scan route and closing chapter state it clearly before submission.
-- The scan produces a bounded decision memo: what can be built, dependencies, limits, physical scope and where the customer decides.
-- A person confirms date and time. Stopping remains possible.
-- The customer journey remains indication → PDF indication → free human scan → decision memo → written proposal → implementation → management.
+The scan contract remains: free, approximately max. 30 minutes, human confirmation, decision memo, separate scoping for hardware/installation/external qualified partners.
 
-## Navigation and company identity
+## Knowledge architecture
 
-Primary navigation keeps Oplossingen, Mogelijkheden, Tarieven and Bedrijf plus the existing scan flow where appropriate. The homepage itself shows no competing header CTA while the hero CTA is visible. Company facts remain canonical: AIOW B.V. · Bijlmermeerstraat 30 · 2131 HC Hoofddorp · KvK 71887466 · info@aiow.io.
+SEO/GEO/GAO depth lives in the knowledge layer and contextual route pages. The primary homepage journey contains only what is needed to choose a route, understand the delivery model and take the next action.
 
-## Copy voice
+Priority context pages preserve one optional plain-language journey before feature examples: `Nu vaak → Met AIOW → menselijke beslissing` / `Current situation → With AIOW → human decision`.
 
-Direct, calm, exact. Three adjectives: architectural, human, assured.
+## Accessibility and performance
 
-Example headline: `AI die voor u werkt.`
-Example button: `Laat één proces of ruimte scannen`.
-
-No invented clients, reviews, addresses, awards, rankings, outcomes, savings, autonomous authority, medical inference or included physical hardware.
-
-## Responsive and accessibility law
-
-- Compose and prove 320, 375, 390, 768, 1024, 1440 and 1920px.
-- NL and EN; Light, Dark and System; Reduced Motion and no JavaScript.
-- Controls at least 44×44px; inputs at least 16px mobile; visible focus; WCAG AA.
-- No horizontal overflow or clipping; 200% text and 400% reflow retain the primary action.
-- Hero image is decorative with empty alt; product truth exists in HTML.
-- The three category links remain semantic and keyboard/screenreader accessible.
-- Exactly one H1 and one visible first-viewport commercial scan action.
-- Target budgets: LCP <2.0s, CLS <0.05, INP <200ms, marketing JS <100KB gzip where measurable.
+- Exactly one H1.
+- Semantic links and landmarks.
+- Touch targets at least 44×44px.
+- Visible keyboard focus; hover and focus parity.
+- NL/EN; Day/Evening/System.
+- Reduced Motion; no-JS; 200% text; 400% reflow.
+- Width proof: 320, 375, 390, 768, 1024, 1440, 1920.
+- No horizontal overflow.
+- LCP <2.0s, CLS <0.05, INP <200ms.
+- Marketing JS <100KB gzip where measurable.
+- No hero image or video dependency; core visual is CSS and text.
 
 ## Anti-generic gate
 
-- **Swap test:** a generic automation agency cannot own the monolith’s work/building/home system meaning and human-control seam.
-- **Logo-away test:** blackened steel + limestone + one copper seam + the three-domain ledger remains recognisably AIOW.
-- **Forbidden:** card grids in the hero, technical blueprint, chatbot, robots, neon glow, fake metrics, centered generic SaaS hero, two peer CTAs, multiple signature effects, body glass, raw stock.
-- Chanel rule: if a line, label, badge or effect can be removed without losing meaning, remove it.
+- Swap test: generic AI agencies do not own the A-I-O-W spine, outlined aperture, lacquer route field, three-world wording and independently composed Evening state.
+- Logo-away test: route field, typography, red/green physical palette and human authority remain recognisable without the wordmark.
+- Exactly one signature moment: Route Field.
+- Chanel rule: remove every effect that does not improve route choice.
+
+## Commercial truth
+
+No invented clients, cases, certifications, savings, rankings, outcomes or autonomous authority. Calculator output remains an indication. Dates and times are confirmed by a person. Hardware, delivery, installation and qualified partner work are separately scoped.
+
+Company facts remain canonical: AIOW B.V. · Bijlmermeerstraat 30 · 2131 HC Hoofddorp · KvK 71887466 · info@aiow.io.
 
 ## Release proof
 
-Before any cutover:
+Before preview or production:
 
-1. claim/source tests, lint, typecheck and production build;
-2. exact first-viewport screenshots for every required width, locale and theme;
-3. no-JS, Reduced Motion, focus/keyboard, controls and 200%/400% proof;
-4. parent/child viewport containment and exact one-CTA browser assertions;
-5. visual review of 390 mobile and 1440 desktop against the approved styleframes;
-6. independent product-art and engineering/accessibility review on one immutable SHA;
-7. protected preview, exact deployment identity, public alias readback and recorded rollback.
+1. tests, lint and production build;
+2. exact responsive screenshots in NL/EN and Day/Evening;
+3. runtime motion-state probe for pointer, focus and direct navigation;
+4. reduced-motion and no-JS proof;
+5. no-overflow, target size and exactly-one-H1 assertions;
+6. 390px mobile and 1440px desktop visual review;
+7. independent product-art and accessibility review on immutable SHA;
+8. protected PR, exact-SHA deployment proof and explicit production cutover decision.
 
-`TECHNICAL_PASS`, `PRODUCT_ART_PASS`, `ACCESSIBILITY_PASS`, `PREVIEW_READY` and `LIVE_PROVEN` remain separate verdicts.
+`TECHNICAL_PASS`, `MOTION_PASS`, `PRODUCT_ART_PASS`, `ACCESSIBILITY_PASS`, `PREVIEW_READY` and `LIVE_PROVEN` remain separate verdicts.
+
+### 2026-09-06 candidate evidence
+
+- `TECHNICAL_PASS`: 216/216 AIOW tests, lint and 89-route Next production build.
+- `MOTION_PASS`: pointer and keyboard route-state parity; settled Route Field states; non-zero standard transition and zero reduced-motion transition.
+- `ACCESSIBILITY_PASS`: one H1, semantic route links, minimum 44px targets, no-JS links, NL/EN and no horizontal overflow.
+- `PRODUCT_ART_PASS`: reviewed at 320 light, 390 Evening, 768 light, 1440 light and settled 1440 `Wonen`; desktop auto-placement, fallback clipping and trust/route overlap blockers were fixed and re-reviewed.
+- Browser receipt: `.team-handsome/AIOW-HI-MOTION-20260906/50-proof/browser-proof.json` — `views=28`, `motion=6`, `no_js=4`.
+- `PREVIEW_READY`: PASS.
+- `LIVE_PROVEN`: pending protected PR, production deployment and custom-domain readback.

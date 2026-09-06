@@ -1,22 +1,21 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { readFile, stat } from "node:fs/promises";
+import { readFile } from "node:fs/promises";
 
 const root=new URL("../../",import.meta.url);
-const[home,enHome,page,hero,css,heroCss,sharedCss,dna,analytics,nextConfig,seo,llms,asset]=await Promise.all([
+const[home,enHome,page,hero,css,heroCss,sharedCss,dna,analytics,nextConfig,seo,llms]=await Promise.all([
  readFile(new URL("app/page.tsx",root),"utf8"),
  readFile(new URL("app/en/page.tsx",root),"utf8"),
  readFile(new URL("components/aiow-v1/LivingBlueprintHomepage.tsx",root),"utf8"),
- readFile(new URL("components/aiow-v1/QuietMonolithHero.tsx",root),"utf8"),
+ readFile(new URL("components/aiow-v1/HumanIndustrialHero.tsx",root),"utf8"),
  readFile(new URL("components/aiow-v1/LivingBlueprintHomepage.module.css",root),"utf8"),
- readFile(new URL("components/aiow-v1/QuietMonolithHero.module.css",root),"utf8"),
+ readFile(new URL("components/aiow-v1/HumanIndustrialHero.module.css",root),"utf8"),
  readFile(new URL("components/aiow-v1/AiowV1Homepage.module.css",root),"utf8"),
  readFile(new URL("DESIGN-DNA.md",root),"utf8"),
  readFile(new URL("core/analytics/Analytics.tsx",root),"utf8"),
  readFile(new URL("next.config.ts",root),"utf8"),
  readFile(new URL("lib/aiow-v1/seo.tsx",root),"utf8"),
  readFile(new URL("app/llms.txt/route.ts",root),"utf8"),
- stat(new URL("public/aiow/quiet-monolith/hero.webp",root)),
 ]);
 
 test("paired home routes mount the canonical homepage and preserve schemas",()=>{
@@ -24,29 +23,36 @@ test("paired home routes mount the canonical homepage and preserve schemas",()=>
  assert.match(enHome,/locale="en"/);
 });
 
-test("homepage mounts Quiet Monolith before the commercial instrument",()=>{
- assert.match(page,/<QuietMonolithHero locale=\{locale\}/);
- assert.doesNotMatch(page,/ThreeWorldsBlueprint|ArchitecturalSections/);
+test("homepage mounts Human Industrial before the commercial instrument",()=>{
+ assert.match(page,/<HumanIndustrialHero locale=\{locale\}/);
+ assert.doesNotMatch(page,/QuietMonolithHero|ThreeWorldsBlueprint|ArchitecturalSections/);
  assert.equal((hero.match(/<h1/g)||[]).length,1);
- assert.ok(page.indexOf("<QuietMonolithHero")<page.indexOf("<LivingBlueprintCalculator"));
+ assert.ok(page.indexOf("<HumanIndustrialHero")<page.indexOf("<LivingBlueprintCalculator"));
  assert.equal((page.match(/<LivingBlueprintCalculator/g)||[]).length,1);
  assert.match(page,/id="booking"/);
 });
 
-test("hero is server rendered, local-asset led and carries one calm hierarchy",()=>{
- assert.doesNotMatch(hero,/"use client"|useState|<video|<canvas/);
- for(const marker of["AI die","voor u","AI that works","for you","Werk","Bedrijfspanden","Woningen & villa’s","Work","Commercial buildings","Homes & villas","Laat één proces of ruimte scannen","Scan one process or space"])assert.match(hero,new RegExp(marker));
- assert.equal((hero.match(/<Link className=\{styles\.cta\}/g)||[]).length,1);
- assert.equal((hero.match(/<Link href=\{category\.href\}/g)||[]).length,1);
- assert.match(hero,/U bepaalt altijd wat er gebeurt\./);
- assert.match(hero,/You always decide what happens\./);
- assert.match(hero,/src="\/aiow\/quiet-monolith\/hero\.webp"/);
- assert.match(hero,/alt=""/);assert.match(hero,/priority/);assert.match(hero,/fetchPriority="high"/);assert.match(hero,/sizes="\(max-width: 700px\) 100vw, 62vw"/);
- assert.doesNotMatch(hero,/<figcaption|srOnly/);
- assert.ok(asset.size>0&&asset.size<100_000,`hero asset bytes=${asset.size}`);
+test("hero owns one route state and keeps all routes semantic",()=>{
+ assert.match(hero,/"use client"/);
+ assert.equal((hero.match(/useState<RouteId>/g)||[]).length,1);
+ assert.match(hero,/onPointerEnter=\{\(\) => preview\(route\.id\)\}/);
+ assert.match(hero,/onFocus=\{\(\) => preview\(route\.id\)\}/);
+ assert.match(hero,/onPointerLeave=\{preserveFocusedRoute\}/);
+ assert.equal((hero.match(/<Link/g)||[]).length,1,"one mapped semantic Link in source");
+ for(const marker of["Voor mijn bedrijf","Voor mijn bedrijfspand","Voor mijn woning of villa","For my company","For my commercial building","For my home or villa"])assert.match(hero,new RegExp(marker));
+ for(const href of["/ai-automatisering","/smart-office","/home","/en/ai-automation","/en/smart-office","/en/home"])assert.match(hero,new RegExp(href.replaceAll("/","\\/")));
+ assert.doesNotMatch(hero,/<Image|<video|<canvas|\/quiet-monolith\/|href=\{scanHref\}/);
 });
 
-test("three environments are calm by default and details preserve the causal truth",()=>{
+test("hero copy is authored, route-first and human bounded",()=>{
+ for(const marker of["Niet nog een","losse tool","Eén systeem","dat voor u werkt","Not another","disconnected tool","One system","built to work for you"])assert.match(hero,new RegExp(marker));
+ assert.match(hero,/Een mens beslist\. Altijd\./);
+ assert.match(hero,/A person decides\. Always\./);
+ assert.match(hero,/AIOW ontwerpt, bouwt en beheert AI op maat/);
+ assert.match(hero,/AIOW designs, builds and manages bespoke AI/);
+});
+
+test("three environments remain calm below the hero and preserve causal truth",()=>{
  for(const marker of["Werk","Bedrijfspanden","Woningen & villa’s","Work","Commercial buildings","Homes & villas"])assert.match(page,new RegExp(marker));
  assert.equal((page.match(/<details>/g)||[]).length,1,"one mapped details element in source");
  for(const marker of["Signaal","AI interpreteert","Systeem handelt begrensd","Mens beslist","Signal","AI interprets","System acts within limits","Person decides"])assert.match(page,new RegExp(marker));
@@ -58,7 +64,7 @@ test("three environments are calm by default and details preserve the causal tru
 test("scan contract, physical scope and human authority remain explicit below the hero",()=>{
  for(const marker of["maximaal circa 30 minuten","een mens bevestigt datum en tijd","u beslist pas na het memo","gekwalificeerde partners","about 30 minutes maximum","a person confirms date and time","you decide only after the memo","qualified partner work"])assert.match(page,new RegExp(marker));
  assert.match(page,/U bepaalt\. Het systeem werkt daarbinnen/);assert.match(page,/You decide\. The system works within that boundary/);
- assert.match(page,/showCta=\{false\}/);
+ assert.match(page,/showCta=\{false\}/);assert.match(page,/variant="human-industrial"/);
 });
 
 test("metadata, schema and machine text retain the three-category public truth",()=>{
@@ -68,16 +74,25 @@ test("metadata, schema and machine text retain the three-category public truth",
  assert.match(llms,/Werk, Bedrijfspanden en Woningen & villa’s/);
 });
 
-test("responsive signature is separately composed and motion fails safe",()=>{
- assert.match(heroCss,/@media\(max-width:700px\)/);assert.match(heroCss,/prefers-reduced-motion:reduce/);assert.match(heroCss,/animation:none/);assert.match(heroCss,/update:slow/);
- assert.match(heroCss,/\.categories span,\.categories a:after\{display:none\}/);
- assert.match(css,/@media\(max-width:600px\)/);
- assert.match(dna,/Quiet Monolith/);assert.match(dna,/Mobile is not compressed desktop/);assert.doesNotMatch(dna,/Three Sections, One Controlled Conductor/);
+test("route field motion has stable geometry and complete fail-safe routes",()=>{
+ assert.match(heroCss,/\.routeIndicator/);assert.match(heroCss,/--route-index/);assert.match(heroCss,/clip-path/);
+ assert.match(heroCss,/@media\(max-width:700px\)/);assert.match(heroCss,/@media\(max-width:360px\)/);
+ assert.match(heroCss,/prefers-reduced-motion:reduce/);assert.match(heroCss,/update:slow/);assert.match(heroCss,/animation:none!important/);assert.match(heroCss,/transition:none!important/);
+ assert.doesNotMatch(heroCss,/infinite|cursor:.*none|filter:blur|backdrop-filter|parallax/i);
+ assert.match(heroCss,/html\[data-theme="dark"\]/);assert.match(heroCss,/prefers-color-scheme:dark/);
+ assert.match(dna,/Signature motion — Route Field/);assert.match(dna,/No idle loop/);assert.match(dna,/Default route content is rendered in settled state/);
 });
 
-test("anti-clutter and quality rails remain explicit",()=>{
- assert.doesNotMatch(hero,/proof:|index: "0|stageLabels|ctaNote|trust:/);
- assert.match(dna,/No scan-contract microcopy, trust chips, secondary CTA/);
+test("Human Industrial removes the generic AI design grammar",()=>{
+ assert.match(dna,/Human Industrial/);assert.match(dna,/No serif anywhere/);assert.match(dna,/Evening is independently art-directed/);
+ assert.match(dna,/A-I-O-W identity spine/);assert.match(dna,/outlined `O`/);
+ assert.doesNotMatch(heroCss,/Fraunces|Georgia|linear-gradient|radial-gradient|box-shadow/);
+ assert.match(css,/Avenir Next Condensed/);assert.doesNotMatch(css,/font-family:var\(--font-fraunces\)/);
+ assert.match(sharedCss,/data-variant="human-industrial"/);
+});
+
+test("anti-clutter and platform quality rails remain explicit",()=>{
+ assert.doesNotMatch(hero,/proof:|stageLabels|ctaNote|trust:|<figcaption/);
  assert.match(sharedCss,/\.header\[data-compact-mobile="true"\]\{height:calc\(58px \+ env\(safe-area-inset-top\)\);top:0;max-width:100%;margin:0/);
  assert.match(analytics,/\["localhost", "127\.0\.0\.1", "::1"\]/);assert.match(analytics,/window\.location\.hostname/);
  assert.match(nextConfig,/htmlLimitedBots:\s*\/\.\*\//);
