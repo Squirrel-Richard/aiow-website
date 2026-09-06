@@ -2,7 +2,7 @@ import Link from "next/link";
 import { PublicHeader } from "./PublicHeader";
 import { PublicFooter } from "./PublicFooter";
 import { LivingBlueprintCalculator } from "./LivingBlueprintCalculator";
-import { QuietMonolithHero } from "./QuietMonolithHero";
+import { HumanIndustrialHero } from "./HumanIndustrialHero";
 import { AIOW_COMPANY, aiowAddressLine } from "@/lib/aiow-v1/company.mjs";
 import styles from "./LivingBlueprintHomepage.module.css";
 
@@ -124,9 +124,9 @@ export function LivingBlueprintHomepage({ locale = "nl" }: { locale?: Locale }) 
   const scanHref = locale === "en" ? "/en/scan" : "/scan";
 
   return <div className={styles.site}>
-    <PublicHeader locale={locale} compactMobile showCta={false} />
+    <PublicHeader locale={locale} compactMobile showCta={false} variant="human-industrial" />
     <main>
-      <QuietMonolithHero locale={locale} />
+      <HumanIndustrialHero locale={locale} />
 
       <section id={locale === "en" ? "systems" : "systemen"} className={styles.environments}>
         <header className={styles.sectionIntro}>
