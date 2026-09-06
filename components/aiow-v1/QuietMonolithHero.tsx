@@ -55,6 +55,7 @@ export function QuietMonolithHero({ locale = "nl" }: { locale?: Locale }) {
         alt=""
         fill
         priority
+        fetchPriority="high"
         sizes="(max-width: 700px) 100vw, 62vw"
         className={styles.image}
       />

@@ -41,7 +41,7 @@ test("hero is server rendered, local-asset led and carries one calm hierarchy",(
  assert.match(hero,/U bepaalt altijd wat er gebeurt\./);
  assert.match(hero,/You always decide what happens\./);
  assert.match(hero,/src="\/aiow\/quiet-monolith\/hero\.webp"/);
- assert.match(hero,/alt=""/);assert.match(hero,/priority/);assert.match(hero,/sizes="\(max-width: 700px\) 100vw, 62vw"/);
+ assert.match(hero,/alt=""/);assert.match(hero,/priority/);assert.match(hero,/fetchPriority="high"/);assert.match(hero,/sizes="\(max-width: 700px\) 100vw, 62vw"/);
  assert.ok(asset.size>0&&asset.size<100_000,`hero asset bytes=${asset.size}`);
 });
 
